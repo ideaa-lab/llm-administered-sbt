@@ -1,8 +1,3 @@
-# NOTES FOR MICHAEL:
-# q6 hard-coded unless question, believe it makes more sense to do it this way
-# "i think it's december..."
-# github
-
 from langchain_community.chat_models import ChatOllama
 from langchain.schema import SystemMessage, HumanMessage
 from datetime import datetime
