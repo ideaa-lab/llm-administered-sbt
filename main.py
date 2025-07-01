@@ -8,6 +8,32 @@ from langchain.schema import SystemMessage, HumanMessage
 from datetime import datetime
 import re
 
+"""
+main.py
+
+Description:
+------------
+This script implements an interactive, LLM-assisted version of the Short Blessed Test (SBT)
+for cognitive impairment screening. It simulates an administrator administering the test
+to a patient using a local language model (e.g., LLaMA via LangChain).
+
+Features:
+- Handles clarifying questions with redirection (zero penalty)
+- Uses LLM for robust input parsing (e.g., months, names, numbers)
+- Applies SBT scoring rules for each of the six questions
+- Dynamically computes and reports final score with interpretation
+
+Requirements:
+- Python 3.9+
+- LangChain
+- Ollama or compatible local LLM backend
+
+Usage:
+------
+Run the script from the terminal:
+$ python main.py
+"""
+
 # === Setup ===
 MODEL = "llama3"
 llm = ChatOllama(model=MODEL)
