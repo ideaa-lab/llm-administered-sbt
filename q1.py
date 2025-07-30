@@ -19,6 +19,8 @@ def normalize_first_response(raw_input, llm):
         HumanMessage(content=raw_input.strip())
     ]).content.strip().lower()
 
+    print(f"Response classified as: {classification}")
+
     if classification == "year":
         normalize_prompt = """You are interpreting a user's spoken or typed response for a cognitive screening test.
         Your task is to extract the YEAR they intended (e.g., 'twenty twenty five' → '2025').
@@ -46,7 +48,7 @@ def run_q1(llm, get_response):
     Run Q1 of the SBT. `get_response()` should be a function that returns the patient's response as a string.
     """
     total_score = 0
-    print("\n🧠 TEST: What year is it now?")
+    print("\n TEST: What year is it now?")
 
     while True:
         year_input = get_response()
@@ -55,14 +57,15 @@ def run_q1(llm, get_response):
         if category == "year":
             if result != current_year:
                 total_score += 4
-            print("🧑‍⚕️ ADMIN: Thank you, let's move on to the next question.")
+            print("ADMIN: Thank you, let's move on to the next question.")
             break
         elif category == "question":
-            print(f"\n🧑‍⚕️ ADMIN: {result}")
+            print(f"\n ADMIN: {result}")
             continue
         else:
-            print(f"\n🧑‍⚕️ ADMIN: {result}")
+            print(f"\n ADMIN: {result}")
             total_score += 4
             break
 
     return total_score
+
