@@ -62,6 +62,8 @@ def normalize_counting_response(raw_input: str, llm):
         HumanMessage(content=raw_input.strip())
     ]).content.strip().lower()
 
+    print(f"Response classified as: {category}")
+
     if category == "question":
         redirection = llm.invoke([
             SystemMessage(content="You are helping administer a cognitive screening test. The patient asked a question. Gently answer and then redirect to say: 'Please count backwards from 20 to 1.'"),
@@ -103,24 +105,24 @@ def normalize_counting_response(raw_input: str, llm):
 
 
 def run_q4(llm, get_input=input, print_output=print):
-    print_output("\n🧠 TEST: Now, please count aloud backwards from 20 to 1.")
+    print_output("\n TEST: Now, please count aloud backwards from 20 to 1.")
     total_errors = 0
 
     while total_errors < 2:
-        response = get_input("👉 Your answer: ").strip()
+        response = get_input(" Your answer: ").strip()
         category, result = normalize_counting_response(response, llm)
 
         if category == "question":
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             continue
 
         elif category == "invalid":
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             total_errors += 1
             continue
 
         elif category == "forward":
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             total_errors += 1
             continue
 
@@ -128,7 +130,7 @@ def run_q4(llm, get_input=input, print_output=print):
             total_errors += result
             break
 
-    print_output("\n🧑‍⚕️ ADMIN: Thank you.")
+    print_output("\n ADMIN: Thank you.")
     return min(total_errors, 2) * 2
 
 '''
