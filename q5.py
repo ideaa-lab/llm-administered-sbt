@@ -16,6 +16,12 @@ def is_clarifying_question(text: str, llm) -> bool:
         SystemMessage(content=prompt.strip()),
         HumanMessage(content=text.strip())
     ])
+
+    if(result.content.strip().lower() == "yes"):
+        print("Response classified as: Clarifying question")
+    else:
+        print("Response classified as: Attempt")
+        
     return result.content.strip().lower() == "yes"
 
 def respond_to_clarifying_question(text: str, llm) -> str:
@@ -122,8 +128,8 @@ def count_month_errors(parsed: list[int], correct: list[int]) -> int:
     return 2
 
 def run_q5(llm, get_input=input, print_output=print):
-    print_output("\n🧠 TEST: Say the months of the year in reverse order.")
-    print_output("🧑‍⚕️ ADMIN: Start with the last month of the year.")
+    print_output("\n TEST: Say the months of the year in reverse order.")
+    print_output(" ADMIN: Start with the last month of the year.")
 
     month_errors = 0
     already_prompted_forward = False
@@ -133,7 +139,7 @@ def run_q5(llm, get_input=input, print_output=print):
 
         if is_clarifying_question(response, llm):
             reply = respond_to_clarifying_question(response, llm)
-            print_output(f"🧑‍⚕️ ADMIN: {reply}")
+            print_output(f"ADMIN: {reply}")
             continue
 
         parsed = parse_each_word_to_month_number(response, llm)
@@ -143,13 +149,13 @@ def run_q5(llm, get_input=input, print_output=print):
         if not already_prompted_forward:
             if len(parsed) < 2 or parsed[0] != 12 or parsed[1] not in [11, 10]:
                 already_prompted_forward = True
-                print_output("🧑‍⚕️ ADMIN: Let’s start again. Try saying the months backward beginning with December.")
+                print_output(" ADMIN: Let’s start again. Try saying the months backward beginning with December.")
                 continue
 
         month_errors = count_month_errors(parsed, correct_sequence)
         break
 
-    print_output("🧑‍⚕️ ADMIN: Thank you. Let's move on to the next question.")
+    print_output(" ADMIN: Thank you. Let's move on to the next question.")
     return min(month_errors, 2) * 2
 
 '''
