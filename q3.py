@@ -30,6 +30,8 @@ def normalize_time_response(raw_input: str, llm):
         HumanMessage(content=raw_input.strip())
     ]).content.strip().lower()
 
+    print(f"Response classified as: {category}")
+
 
     if category == "question":
         redirect = llm.invoke([
@@ -60,21 +62,21 @@ def normalize_time_response(raw_input: str, llm):
     return ("invalid", "Thank you. Let's continue.")
 
 def run_q3(llm, get_input=input, print_output=print):
-    print_output("\n🧠 TEST: Without looking at your watch or clock, what time is it?")
+    print_output("\n TEST: Without looking at your watch or clock, what time is it?")
     time_attempts = 0
 
     while time_attempts < 13:
-        time_input = get_input("👉 Your answer: ").strip().lower()
+        time_input = get_input("Your answer: ").strip().lower()
         category, result = normalize_time_response(time_input, llm)
 
         if category == "question":
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\nADMIN: {result}")
             time_attempts += 2
             continue
 
         elif category == "vague":
             if (time_attempts<9):
-                print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+                print_output(f"\nADMIN: {result}")
             time_attempts += 4
             continue
 
