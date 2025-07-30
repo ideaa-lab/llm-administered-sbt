@@ -25,6 +25,8 @@ def normalize_month_response(raw_input: str, llm):
         HumanMessage(content=raw_input.strip())
     ]).content.strip().lower()
 
+    print(f"Response classified as: {classification}")
+
     if classification == "month":
         normalize_prompt = """
         Extract the month the patient intended as the name of the month(example: june). If they responded with a number convert it to the correct month name. 
@@ -54,25 +56,25 @@ def normalize_month_response(raw_input: str, llm):
 
 def run_q2(llm, get_input=input, print_output=print):
     """Runs Q2 interaction. Returns Q2 score only."""
-    print_output("\n🧠 TEST: What month is it now?")
+    print_output("\nADMIN: What month is it now?")
     q2_score = 0
 
     while True:
-        month_input = get_input("👉 Your answer: ").strip()
+        month_input = get_input("Your answer: ").strip()
         category, result = normalize_month_response(month_input, llm)
 
         if category == "month":
             if result != current_month_name and result != current_month_number:
                 q2_score += 3
-            print_output("🧑‍⚕️ ADMIN: Thank you, let's move on to the next question.")
+            print_output(" ADMIN: Thank you, let's move on to the next question.")
             break
 
         elif category == "question":
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             continue  # re-ask the question
 
         else:
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             q2_score += 3
             break
 
@@ -136,10 +138,10 @@ def normalize_month_response(raw_input: str, llm):
 
 def run_q2(llm, total_score, get_input=input, print_output=print):
     """Runs Q2 interaction and returns updated total_score."""
-    print_output("\n🧠 TEST: What month is it now?")
+    print_output("\n TEST: What month is it now?")
 
     while True:
-        month_input = get_input("👉 Your answer: ").strip()
+        month_input = get_input(" Your answer: ").strip()
         category, result = normalize_month_response(month_input, llm)
 
         if category == "month":
@@ -147,15 +149,15 @@ def run_q2(llm, total_score, get_input=input, print_output=print):
                 pass  # correct
             else:
                 total_score += 3
-            print_output("🧑‍⚕️ ADMIN: Thank you, let's move on to the next question.")
+            print_output(" ADMIN: Thank you, let's move on to the next question.")
             break
 
         elif category == "question":
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             continue
 
         else:
-            print_output(f"\n🧑‍⚕️ ADMIN: {result}")
+            print_output(f"\n ADMIN: {result}")
             total_score += 3
             break
 
