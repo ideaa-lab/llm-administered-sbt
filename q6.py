@@ -28,6 +28,10 @@ def is_clarifying_question_q6(text: str, llm) -> bool:
         SystemMessage(content=prompt.strip()),
         HumanMessage(content=text.strip())
     ])
+    if(result.content.strip().lower() == "yes"):
+        print("Response classified as: Clarifying question")
+    else:
+        print("Response classified as: Attempt to answer question")
     return result.content.strip().lower() == "yes"
 
 def respond_to_clarifying_question_q6(text: str, llm) -> str:
@@ -70,19 +74,20 @@ def score_recall_response(response: str) -> tuple[int, list[int]]:
     return score, matched_ids
 
 def run_q6(llm, get_input=input, print_output=print):
-    print_output("\n🧠 TEST: Repeat the name and address I asked you to remember.")
+    print_output("\n TEST: Repeat the name and address I asked you to remember.")
 
     while True:
-        q6_response = get_input("👉 Your answer: ").strip()
+        q6_response = get_input(" Your answer: ").strip()
 
         if is_clarifying_question_q6(q6_response, llm):
             reply = respond_to_clarifying_question_q6(q6_response, llm)
-            print_output(f"🧑‍⚕️ ADMIN: {reply}")
+            print_output(f" ADMIN: {reply}")
             continue
 
         q6_score, matched_items = score_recall_response(q6_response)
         break
 
-    print_output("🧑‍⚕️ ADMIN: Thank you.")
+    print_output(" ADMIN: Thank you.")
     return q6_score
+
 
