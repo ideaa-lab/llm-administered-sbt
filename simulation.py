@@ -1,3 +1,5 @@
+# SAY SCORE OF EACH QUESTION
+
 from langchain.schema import SystemMessage
 from langchain_ollama import ChatOllama
 import io
@@ -69,7 +71,7 @@ def simulate(result1, result2, result3, result4, result5, result6):
 
             response = llm.invoke([SystemMessage(content=system_prompt.strip())])
             patient_answer = response.content.strip()
-            print(f"🧓 PATIENT: {patient_answer}")
+            print(f" PATIENT: {patient_answer}")
             return patient_answer
 
         # 0 → patient gets it right
@@ -80,7 +82,7 @@ def simulate(result1, result2, result3, result4, result5, result6):
         q1_score = run_q1(llm, lambda: simulated_patient_response(get_wrong_q1))
         total_score += q1_score
 
-        print(f"\nScore after Q1: {total_score}")
+        print(f"\nScore of Q1: {q1_score}")
 
         # ===== Q1 END
 
@@ -142,7 +144,7 @@ def simulate(result1, result2, result3, result4, result5, result6):
         q2_score = run_q2(llm, get_input=lambda _: simulated_patient_response_q2(get_wrong_q2))
         total_score += q2_score
 
-        print(f"\nScore after Q2: {total_score}")
+        print(f"\nScore of Q2: {q2_score}")
 
         # ===== Q2 End
 
@@ -278,14 +280,14 @@ def simulate(result1, result2, result3, result4, result5, result6):
 
             response = llm.invoke([SystemMessage(content=system_prompt.strip())])
             patient_answer = response.content.strip()
-            print(f"🧓 PATIENT: {patient_answer}")
+            print(f"PATIENT: {patient_answer}")
             return patient_answer
 
         #get_wrong_q3 = int(input("Should the patient get Q3 wrong? (1 = yes, 0 = no): ").strip())
 
         q3_score = run_q3(llm, get_input=lambda _: simulated_patient_response_q3(get_wrong_q3))
         total_score += q3_score
-        print(f"Score after q3: {total_score}")
+        print(f"Score of q3: {q3_score}")
 
         # ==== q3 end
 
@@ -385,7 +387,7 @@ def simulate(result1, result2, result3, result4, result5, result6):
         get_q4_response = simulated_patient_response_q4_factory(get_wrong_q4)
         q4_score = run_q4(llm, get_input=get_q4_response)
         total_score += q4_score
-        print(f"Score after q4: {total_score}")
+        print(f"Score of q4: {q4_score}")
 
         # ===== Q4 End
 
@@ -498,7 +500,7 @@ def simulate(result1, result2, result3, result4, result5, result6):
 
         q5_score = run_q5(llm, get_input=lambda _: simulated_patient_response_q5(llm, get_wrong_q5, 0))
         total_score += q5_score
-        print(f"Total score after Q5: {total_score}")
+        print(f"Total score of Q5: {q5_score}")
 
         # SKIP THIS NUMBER: {}
 
@@ -541,7 +543,7 @@ def simulate(result1, result2, result3, result4, result5, result6):
         get_q6_response = simulated_patient_response_q6_factory(llm, get_wrong_q6)
         q6_score = run_q6(llm, get_input=get_q6_response)
         total_score += q6_score
-        print(f"Score after Q6: {total_score}")
+        print(f"Score of Q6: {q6_score}")
 
         # ==== Q6 END ====
 
