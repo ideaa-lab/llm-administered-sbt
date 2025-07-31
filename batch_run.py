@@ -1,3 +1,6 @@
+# GO TO === File paths === to change input file and output file
+# (input file should be name of the csv you are using)
+
 import pandas as pd
 import os
 from simulation import simulate
@@ -21,8 +24,8 @@ input_file = "Mistake Pattern Distribution.csv"
 #input_file = "Sample.csv"
 #MUST BE CSV
 #input_file = "Your CSV File Name.csv"
-output_file = "476_sbt_simulation_output.csv" # name whatever you want it to be
-append_log = "476_sbt_simulation_log.csv" # name whatever you want it to be
+output_file = "x_simulation_log.csv" # name whatever you want it to be
+append_log = "x_simulation_output.csv" # name whatever you want it to be
 
 # === Load input data ===
 df = pd.read_csv(input_file)
@@ -51,7 +54,7 @@ for i, subscore in tqdm(enumerate(df["subscoreID"]), total=len(df), desc="Simula
     if trial_id in processed_ids:
         continue
 
-    # Parse Q1–Q6
+    # Parse Q1–Q6 
     q_values = list(map(int, subscore.split("~")))
     scores_str, total_score, transcript_path = simulate(*q_values)
 
